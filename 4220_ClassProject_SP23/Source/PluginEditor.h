@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "Components/LargeKnob.h"
+#include "Components/SmallKnob.h"
 
 //==============================================================================
 /**
@@ -28,6 +30,23 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     _4220_ClassProject_SP23AudioProcessor& audioProcessor;
+    
+    juce::Image bgImage;
+    juce::Slider slider1; //reverbtime
+    juce::Slider slider2; //predelay
+    juce::Slider slider3; //hpf freq 
+    
+    LargeKnob largeKnobLNF;
+    SmallKnob smallKnobLNF;
+    
+    juce::LookAndFeel_V2 lookAndFeel2;
+    
+    juce::TextButton button1; //hpf on off
+    //juce::drop hpfMenu; //slope
+    
+  
+    
+    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessorEditor)
 };

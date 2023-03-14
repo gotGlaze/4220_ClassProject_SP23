@@ -12,6 +12,17 @@
       <FILE id="IQFDna" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="ACrYXP" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <GROUP id="{0D3EE0A2-963A-E8B2-E3B1-71648DE76333}" name="Binary Data">
+        <FILE id="E3fUZ5" name="background.png" compile="0" resource="1" file="Source/Binary Data/background.png"/>
+        <FILE id="X3PSeN" name="knob_large.png" compile="0" resource="1" file="Source/Binary Data/knob_large.png"/>
+        <FILE id="nN6oUd" name="knob_small.png" compile="0" resource="1" file="Source/Binary Data/knob_small.png"/>
+      </GROUP>
+      <GROUP id="{2A2F880F-C5C8-7AF0-C191-89BC1707871F}" name="Components">
+        <FILE id="sT6vvj" name="LargeKnob.cpp" compile="1" resource="0" file="Source/Components/LargeKnob.cpp"/>
+        <FILE id="k4n3b0" name="LargeKnob.h" compile="0" resource="0" file="Source/Components/LargeKnob.h"/>
+        <FILE id="E9tAoF" name="SmallKnob.cpp" compile="1" resource="0" file="Source/Components/SmallKnob.cpp"/>
+        <FILE id="h43gBA" name="SmallKnob.h" compile="0" resource="0" file="Source/Components/SmallKnob.h"/>
+      </GROUP>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

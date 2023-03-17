@@ -9,6 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "DSP/AudioEffect.h"
+#include "DSP/GainEffect.h"
 
 //==============================================================================
 /**
@@ -56,7 +58,21 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    void setEffect(int effectNum) {
+        if(effectNum == 1) {
+            effect = std::unique_ptr<AudioEffect> ();
+        } else if (effectNum == 2) {
+            effect = std::unique_ptr<AudioEffect> ();
+        } else if (effectNum == 3) {
+            effect = std::unique_ptr<AudioEffect> ();
+        } else {
+            effect = std::unique_ptr<AudioEffect> ();
+        }
+    };
+    
 private:
-    //==============================================================================
+    std::unique_ptr<AudioEffect> effect;
+    
+    //=====================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessor)
 };

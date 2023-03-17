@@ -19,30 +19,51 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     setSize (417, 419);
     bgImage = juce::ImageCache::getFromMemory(BinaryData::background_png, BinaryData::background_pngSize);
     
-    slider1.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
-    slider1.setBounds(50,50,180,180);
-    slider1.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    slider1.setLookAndFeel(&largeKnobLNF);
-    addAndMakeVisible(slider1);
+    reverbTimeSlider.addListener(this);
+    reverbTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
+    reverbTimeSlider.setBounds(50,50,180,180);
+    reverbTimeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    reverbTimeSlider.setRange(0.0, 5000);
+    reverbTimeSlider.setLookAndFeel(&largeKnobLNF);
+    addAndMakeVisible(reverbTimeSlider);
     
-    slider2.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //predelay
-    slider2.setBounds(300,50,100,100);
-    slider2.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    slider2.setLookAndFeel(&smallKnobLNF);
-    addAndMakeVisible(slider2);
+    preDelaySlider.addListener(this);
+    preDelaySlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //predelay
+    preDelaySlider.setBounds(275,50,100,100);  preDelaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    preDelaySlider.setRange(0, 200);
+    preDelaySlider.setLookAndFeel(&smallKnobLNF);
+    addAndMakeVisible(preDelaySlider);
     
-    slider3.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //hpf frequency
-    slider3.setBounds(50,320,100,100);
-    slider3.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    slider3.setLookAndFeel(&smallKnobLNF);
-    addAndMakeVisible(slider3);
+    hpfSlider.addListener(this);
+    hpfSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //hpf frequency
+    hpfSlider.setBounds(50,320,100,100);
+    hpfSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    hpfSlider.setRange(0, 500);
+    hpfSlider.setLookAndFeel(&smallKnobLNF);
+    addAndMakeVisible(hpfSlider);
     
-    button1.setBounds(50, 230, 55, 35);
-    button1.setButtonText("HPF");
-    button1.setClickingTogglesState(true);
-    button1.setColour(juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::peru);
-    button1.setColour(juce::TextButton::ColourIds::textColourOffId, juce::Colours::red);
-    addAndMakeVisible(button1);
+    hpfButton.setBounds(50, 265, 55, 35);
+    hpfButton.setButtonText("HPF");
+    hpfButton.setClickingTogglesState(true);
+    hpfButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::peru);
+    hpfButton.setColour(juce::TextButton::ColourIds::textColourOffId, juce::Colours::red);
+    addAndMakeVisible(hpfButton);
+    
+    slopeSelector.addListener(this);
+    slopeSelector.addItem("Choose Slope", 0);
+    slopeSelector.addItem("-6dB", 1);
+    slopeSelector.addItem("-12dB", 2);
+    slopeSelector.addItem("-18dB",3);
+    slopeSelector.addItem("-24dB", 4);
+    slopeSelector.setBounds(200, 350, 150, 50);
+    addAndMakeVisible(slopeSelector);
+
+    wetSlider.addListener(this);
+    wetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
+    wetSlider.setBounds(200,150,180,180);
+    wetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    wetSlider.setLookAndFeel(&largeKnobLNF);
+    addAndMakeVisible(wetSlider);
 
     
 }
@@ -63,4 +84,43 @@ void _4220_ClassProject_SP23AudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+}
+
+
+void _4220_ClassProject_SP23AudioProcessorEditor::comboBoxChanged (juce::ComboBox *comboBoxThatHasChanged) {
+    if(comboBoxThatHasChanged == &slopeSelector) {
+        if(slopeSelector.getSelectedId() == 1) {
+            audioProcessor.setEffect(slopeSelector.getSelectedId());
+        } else if(slopeSelector.getSelectedId() == 2) {
+            audioProcessor.setEffect(slopeSelector.getSelectedId());
+        } else if(slopeSelector.getSelectedId() == 3) {
+            audioProcessor.setEffect(slopeSelector.getSelectedId());
+        } else { //==4
+            audioProcessor.setEffect(slopeSelector.getSelectedId());
+        }
+    }
+}
+
+void _4220_ClassProject_SP23AudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
+    int a;
+    if(slider == &preDelaySlider) {
+        a = 0;
+        //do process
+    }
+    
+    if(slider == &reverbTimeSlider) {
+        a = 0;
+        //do process
+    }
+    
+    if(slider == &hpfSlider) {
+        a = 0;
+        //hpf
+    }
+    
+    if(slider == &wetSlider) {
+        a = 0;
+        //do process
+    }
+    
 }

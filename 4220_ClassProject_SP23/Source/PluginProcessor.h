@@ -5,12 +5,14 @@
 
   ==============================================================================
 */
-
 #pragma once
 
 #include <JuceHeader.h>
 #include "DSP/AudioEffect.h"
-#include "DSP/GainEffect.h"
+#include "DSP/ReverbMain.h"
+#include "DSP/AllPassFilter.h"
+#include "DSP/Biquad.h"
+#include "DSP/FractionalDelay.hpp"
 
 //==============================================================================
 /**
@@ -57,6 +59,15 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    float decayTime;
+    void setDecayTime(float decayValue);
+    //diffusion? set diffusion?
+    //mix? smooth mix? alpha? setmix?
+    float hpf;
+    float hpfSlope;
+    void setHPF(float hpfValue);
+    
 
     void setEffect(int effectNum) {
         if(effectNum == 1) {
@@ -72,6 +83,14 @@ public:
     
 private:
     std::unique_ptr<AudioEffect> effect;
+    
+    ReverbMain reverb;
+    Biquad bqFilter {Biquad::FilterType::HPF, 0.7071f};
+    
+    int count = 0;
+    
+    //public:
+    //value tree state information
     
     //=====================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessor)

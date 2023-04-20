@@ -5,7 +5,6 @@
 
   ==============================================================================
 */
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
@@ -26,7 +25,11 @@ _4220_ClassProject_SP23AudioProcessor::_4220_ClassProject_SP23AudioProcessor()
 
 _4220_ClassProject_SP23AudioProcessor::~_4220_ClassProject_SP23AudioProcessor()
 {
+    
 }
+
+//value tree state set parameters
+
 
 //==============================================================================
 const juce::String _4220_ClassProject_SP23AudioProcessor::getName() const
@@ -95,6 +98,10 @@ void _4220_ClassProject_SP23AudioProcessor::prepareToPlay (double sampleRate, in
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    reverb.prepareToPlay(sampleRate, samplesPerBlock);
+    bqFilter.setFs(sampleRate);
+    
+    //float y = 0.1; //smoothing steps
 }
 
 void _4220_ClassProject_SP23AudioProcessor::releaseResources()
@@ -143,6 +150,10 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+    
+    int numSamples = buffer.getNumSamples();
+    
+    // GUI values state raw parameter values
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
@@ -150,11 +161,21 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+    
+    for(int n = 0; n < numSamples; n++) {
+        //mix val
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
+        //auto* channelData = buffer.getWritePointer (channel); //default
+        float x = buffer.getWritePointer(channel) [n];
+        float r = reverb.processSample(x, channel);
+        r = bqFilter.processSample(r, channel);
+        
+        float y = ((1.f - 0.7) * x) + (0.7 * r);
+        buffer.getWritePointer(channel) [n] = y;
+        
+    }
+                   
     }
 }
 
@@ -175,13 +196,27 @@ void _4220_ClassProject_SP23AudioProcessor::getStateInformation (juce::MemoryBlo
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+    
+    //current state info
 }
 
 void _4220_ClassProject_SP23AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    
+    //xml state
 }
+
+void _4220_ClassProject_SP23AudioProcessor::setDecayTime(float decayValue) {
+    reverb.setTime(decayValue/100.f);
+}
+
+void _4220_ClassProject_SP23AudioProcessor::setHPF(float hpfValue) {
+    hpf = hpfValue;
+    bqFilter.setFreq(hpf);
+}
+
 
 //==============================================================================
 // This creates new instances of the plugin..

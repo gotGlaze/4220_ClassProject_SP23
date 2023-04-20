@@ -21,7 +21,7 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     
     reverbTimeSlider.addListener(this);
     reverbTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
-    reverbTimeSlider.setBounds(50,50,180,180);
+    reverbTimeSlider.setBounds(50,40,180,180);
     reverbTimeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
     reverbTimeSlider.setRange(0.0, 5000);
     reverbTimeSlider.setLookAndFeel(&largeKnobLNF);
@@ -29,20 +29,21 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     
     preDelaySlider.addListener(this);
     preDelaySlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //predelay
-    preDelaySlider.setBounds(275,50,100,100);  preDelaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    preDelaySlider.setBounds(275,40,100,100);
+    preDelaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
     preDelaySlider.setRange(0, 200);
     preDelaySlider.setLookAndFeel(&smallKnobLNF);
     addAndMakeVisible(preDelaySlider);
     
     hpfSlider.addListener(this);
     hpfSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //hpf frequency
-    hpfSlider.setBounds(50,320,100,100);
-    hpfSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    hpfSlider.setBounds(50,300,100,100);
+    hpfSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     hpfSlider.setRange(0, 500);
     hpfSlider.setLookAndFeel(&smallKnobLNF);
     addAndMakeVisible(hpfSlider);
     
-    hpfButton.setBounds(50, 265, 55, 35);
+    hpfButton.setBounds(50, 245, 55, 35);
     hpfButton.setButtonText("HPF");
     hpfButton.setClickingTogglesState(true);
     hpfButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::peru);
@@ -50,11 +51,11 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     addAndMakeVisible(hpfButton);
     
     slopeSelector.addListener(this);
-    slopeSelector.addItem("Choose Slope", 0);
-    slopeSelector.addItem("-6dB", 1);
-    slopeSelector.addItem("-12dB", 2);
-    slopeSelector.addItem("-18dB",3);
-    slopeSelector.addItem("-24dB", 4);
+    slopeSelector.addItem("Choose Slope", 1);
+    slopeSelector.addItem("-6dB", 2);
+    slopeSelector.addItem("-12dB", 3);
+    slopeSelector.addItem("-18dB",4);
+    slopeSelector.addItem("-24dB", 5);
     slopeSelector.setBounds(200, 350, 150, 50);
     addAndMakeVisible(slopeSelector);
 

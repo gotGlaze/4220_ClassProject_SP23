@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="KikGvF" name="4220_ClassProject_SP23" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
-              jucerFormatVersion="1">
+              jucerFormatVersion="1" pluginFormats="buildAU,buildStandalone,buildVST3">
   <MAINGROUP id="FGvqEP" name="4220_ClassProject_SP23">
     <GROUP id="{B2FA9177-7B2A-7CD1-E0C5-29F61268637F}" name="Source">
       <FILE id="N7FPWu" name="PluginProcessor.cpp" compile="1" resource="0"

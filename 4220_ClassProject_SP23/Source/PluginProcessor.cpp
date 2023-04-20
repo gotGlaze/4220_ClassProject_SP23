@@ -98,6 +98,7 @@ void _4220_ClassProject_SP23AudioProcessor::prepareToPlay (double sampleRate, in
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    predelay.setFs(sampleRate); predelay.setDelaySamples(0.0f);
     reverb.prepareToPlay(sampleRate, samplesPerBlock);
     bqFilter.setFs(sampleRate);
     
@@ -151,6 +152,12 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
+    predelay.setDepth(0.0f);
+    predelay.setSpeed(0.0f);
+    float predelaySec = predelayMS * 0.001;
+    float predelaySamples = predelaySec * Fs;
+    predelay.setDelaySamples(predelaySamples);
+    
     int numSamples = buffer.getNumSamples();
     
     // GUI values state raw parameter values
@@ -166,12 +173,14 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
         //mix val
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        //auto* channelData = buffer.getWritePointer (channel); //default
         float x = buffer.getWritePointer(channel) [n];
-        float r = reverb.processSample(x, channel);
-        r = bqFilter.processSample(r, channel);
+        //auto* channelData = buffer.getWritePointer (channel); //default
+        float verb = predelay.processSample(x, channel);
+        verb = reverb.processSample(verb, channel);
+        verb = bqFilter.processSample(verb, channel);
         
-        float y = ((1.f - 0.7) * x) + (0.7 * r);
+        float y = (1.f- wet) * x + wet * verb;
+        //float y = ((1.f - 0.7) * x) + (0.7 * r);
         buffer.getWritePointer(channel) [n] = y;
         
     }
@@ -217,6 +226,16 @@ void _4220_ClassProject_SP23AudioProcessor::setHPF(float hpfValue) {
     bqFilter.setFreq(hpf);
 }
 
+//check this one out
+void _4220_ClassProject_SP23AudioProcessor::setPreDelayTime(float pdValue) {
+    pdValue = predelayMS;
+    predelay.setDelaySamples(predelayMS);
+}
+
+void _4220_ClassProject_SP23AudioProcessor::setWet(float wetValue) {
+    wet = wetValue;
+    //set wet value?? where
+}
 
 //==============================================================================
 // This creates new instances of the plugin..

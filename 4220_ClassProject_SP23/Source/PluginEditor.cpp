@@ -19,53 +19,86 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     setSize (417, 419);
     bgImage = juce::ImageCache::getFromMemory(BinaryData::background_png, BinaryData::background_pngSize);
     
+    //Reverb Time
     reverbTimeSlider.addListener(this);
-    reverbTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
-    reverbTimeSlider.setBounds(50,40,180,180);
+    reverbTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    reverbTimeSlider.setBounds(40,80,145,180);
     reverbTimeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
     reverbTimeSlider.setRange(0.0, 5000);
+    reverbTimeSlider.setValue(60.0);
+    reverbTimeSlider.setTextValueSuffix(" ms");
     reverbTimeSlider.setLookAndFeel(&largeKnobLNF);
     addAndMakeVisible(reverbTimeSlider);
     
+    reverbTimeLabel.setText("Reverb Time", juce::dontSendNotification);
+    reverbTimeLabel.attachToComponent(&reverbTimeSlider, false);
+    reverbTimeLabel.setJustificationType(juce::Justification::centredBottom);
+    reverbTimeLabel.setFont(juce::Font("Times New Roman", 20.0, juce::Font::bold));
+    
+    
+    //Predelay
     preDelaySlider.addListener(this);
     preDelaySlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //predelay
-    preDelaySlider.setBounds(275,40,100,100);
+    preDelaySlider.setBounds(280,100,87,100);
     preDelaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
     preDelaySlider.setRange(0, 200);
+    preDelaySlider.setValue(20.0);
+    preDelaySlider.setTextValueSuffix(" ms");
     preDelaySlider.setLookAndFeel(&smallKnobLNF);
     addAndMakeVisible(preDelaySlider);
     
+    preDelayLabel.setText("Predelay", juce::dontSendNotification);
+    preDelayLabel.attachToComponent(&preDelaySlider, false);
+    preDelayLabel.setJustificationType(juce::Justification::centredLeft);
+    preDelayLabel.setFont(juce::Font("Times New Roman", 20.0, juce::Font::bold));
+    
+    
+    //High pass filter
     hpfSlider.addListener(this);
     hpfSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //hpf frequency
-    hpfSlider.setBounds(50,300,100,100);
+    hpfSlider.setBounds(70,300,87,100);
     hpfSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     hpfSlider.setRange(0, 500);
+    hpfSlider.setValue(100.0);
+    hpfSlider.setTextValueSuffix(" Hz");
     hpfSlider.setLookAndFeel(&smallKnobLNF);
     addAndMakeVisible(hpfSlider);
     
-    hpfButton.setBounds(50, 245, 55, 35);
-    hpfButton.setButtonText("HPF");
-    hpfButton.setClickingTogglesState(true);
-    hpfButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::peru);
-    hpfButton.setColour(juce::TextButton::ColourIds::textColourOffId, juce::Colours::red);
-    addAndMakeVisible(hpfButton);
+    hpfLabel.setText("HPF", juce::dontSendNotification);
+    hpfLabel.attachToComponent(&hpfSlider, false);
+    hpfLabel.setJustificationType(juce::Justification::centredLeft);
+    hpfLabel.setFont(juce::Font("Times New Roman", 20.0, juce::Font::bold));
     
-    slopeSelector.addListener(this);
-    slopeSelector.addItem("Choose Slope", 1);
-    slopeSelector.addItem("-6dB", 2);
-    slopeSelector.addItem("-12dB", 3);
-    slopeSelector.addItem("-18dB",4);
-    slopeSelector.addItem("-24dB", 5);
-    slopeSelector.setBounds(200, 350, 150, 50);
-    addAndMakeVisible(slopeSelector);
-
+    //Wet dry mix
     wetSlider.addListener(this);
     wetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
-    wetSlider.setBounds(200,150,180,180);
+    wetSlider.setBounds(245,230,145,180);
     wetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
     wetSlider.setLookAndFeel(&largeKnobLNF);
     addAndMakeVisible(wetSlider);
 
+    wetLabel.setText("Dry to Wet Mix", juce::dontSendNotification);
+    wetLabel.attachToComponent(&wetSlider, false);
+    wetLabel.setJustificationType(juce::Justification::centredBottom);
+    wetLabel.setFont(juce::Font("Times New Roman", 20.0, juce::Font::bold));
+    
+    //Main Title
+    mainTitle.setText("4220 Reverb", juce::dontSendNotification);
+    mainTitle.setJustificationType(juce::Justification::centred);
+    mainTitle.setBounds(95,5,250,40);
+    mainTitle.setFont(juce::Font("Times New Roman", 35.0, juce::Font::bold));
+    addAndMakeVisible(mainTitle);
+    
+//    reverbTimeSlider.resized();
+//    hpfSlider.resized();
+//    preDelaySlider.resized();
+//    wetSlider.resized();
+    
+//    setResizable(true, true);
+//    setSize(800,300);
+//    setResizeLimits(412, 140, 1600, 550);
+    
+    //value tree state
     
 }
 
@@ -88,40 +121,23 @@ void _4220_ClassProject_SP23AudioProcessorEditor::resized()
 }
 
 
-void _4220_ClassProject_SP23AudioProcessorEditor::comboBoxChanged (juce::ComboBox *comboBoxThatHasChanged) {
-    if(comboBoxThatHasChanged == &slopeSelector) {
-        if(slopeSelector.getSelectedId() == 1) {
-            audioProcessor.setEffect(slopeSelector.getSelectedId());
-        } else if(slopeSelector.getSelectedId() == 2) {
-            audioProcessor.setEffect(slopeSelector.getSelectedId());
-        } else if(slopeSelector.getSelectedId() == 3) {
-            audioProcessor.setEffect(slopeSelector.getSelectedId());
-        } else { //==4
-            audioProcessor.setEffect(slopeSelector.getSelectedId());
-        }
-    }
-}
-
 void _4220_ClassProject_SP23AudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
-    int a;
+   
     if(slider == &preDelaySlider) {
-        a = 0;
-        //do process
+        audioProcessor.setPreDelayTime(preDelaySlider.getValue());
     }
     
     if(slider == &reverbTimeSlider) {
-        a = 0;
-        //do process
+        audioProcessor.setDecayTime(reverbTimeSlider.getValue());
     }
     
     if(slider == &hpfSlider) {
-        a = 0;
+        audioProcessor.setHPF(hpfSlider.getValue());
         //hpf
     }
     
     if(slider == &wetSlider) {
-        a = 0;
-        //do process
+        audioProcessor.setWet(wetSlider.getValue());
     }
     
 }

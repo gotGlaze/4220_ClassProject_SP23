@@ -16,8 +16,7 @@
 //==============================================================================
 /**
 */
-class _4220_ClassProject_SP23AudioProcessorEditor  : public juce::AudioProcessorEditor,
-public juce::ComboBox::Listener, public juce::Slider::Listener
+class _4220_ClassProject_SP23AudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::Slider::Listener
 
 {
 public:
@@ -28,7 +27,6 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    virtual void comboBoxChanged (juce::ComboBox *comboBoxThatHasChanged) override;
     void sliderValueChanged(juce::Slider *slider) override;
     //virtual void buttonClicked(juce::Button* button);
 
@@ -46,13 +44,15 @@ private:
     LargeKnob largeKnobLNF;
     SmallKnob smallKnobLNF;
     
+    juce::Label reverbTimeLabel;
+    juce::Label preDelayLabel;
+    juce::Label wetLabel;
+    juce::Label hpfLabel;
+    
+    juce::Label mainTitle;
+    
     juce::LookAndFeel_V2 lookAndFeel2;
     
-    juce::TextButton hpfButton; //hpf on off
-    
-    juce::ComboBox slopeSelector;
-    
-    
-
+//value tree 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessorEditor)
 };

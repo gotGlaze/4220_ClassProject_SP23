@@ -35,7 +35,7 @@ private:
     const float DSA1  = 200; //delay samples all pass filter
     const float DSA2  = 80;
     
-    float feedback = 0.5; //feedback level?
+    float feedback = 0.5; //feedback level
     
     const float speedF1  = 1.047;
     const float speedF2  = 1.188;

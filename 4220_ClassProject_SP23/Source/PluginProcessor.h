@@ -62,11 +62,18 @@ public:
     
     float decayTime;
     void setDecayTime(float decayValue);
-    //diffusion? set diffusion?
-    //mix? smooth mix? alpha? setmix?
+
+    float wet = 0.5f;
+    void setWet(float wetValue);
+    
     float hpf;
     float hpfSlope;
     void setHPF(float hpfValue);
+    
+    float predelayMS = 0.0f;
+    float preDelayTime;
+    //void setPreDelayTime(float pdValue);
+    void setPreDelayTime(float pdValue);
     
 
     void setEffect(int effectNum) {
@@ -84,6 +91,8 @@ public:
 private:
     std::unique_ptr<AudioEffect> effect;
     
+    FractionalDelay predelay; //???
+    float Fs = 48000.f;
     ReverbMain reverb;
     Biquad bqFilter {Biquad::FilterType::HPF, 0.7071f};
     

@@ -44,12 +44,12 @@ void AudioEffect::processInPlace(float * buffer, const int numSamples, const int
         
         *buffer = x; // over-write current value
         
-        ++buffer; // move pointer to the next sample
+        buffer++;
     }
     
 }
 
-
+//knob?
 void AudioEffect::setKnob(float value) {
     knobValue = value;
 }

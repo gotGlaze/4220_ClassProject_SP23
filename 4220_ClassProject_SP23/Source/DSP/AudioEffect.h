@@ -33,15 +33,12 @@ public:
     
     void prepareToPlay(float sampleRate, int samplesPerBlock);
     
-    virtual void setKnob(float value);
+    virtual void setKnob(float value); //knob?
 
 protected:
-    // Used with inheritance
-    // "Protected" variables in
-    // base class become "private"
-    // variables in inherited class
+    
     float Fs;
-    float knobValue;
+    float knobValue; //knob/
     
 private:
     

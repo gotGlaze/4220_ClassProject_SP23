@@ -24,10 +24,21 @@
         <FILE id="h43gBA" name="SmallKnob.h" compile="0" resource="0" file="Source/Components/SmallKnob.h"/>
       </GROUP>
       <GROUP id="{6B280181-2DEC-1AA3-B711-508A10109150}" name="DSP">
+        <FILE id="JxwnLt" name="FBCFilter.cpp" compile="1" resource="0" file="Source/DSP/FBCFilter.cpp"/>
+        <FILE id="el5WEW" name="FBCFilter.h" compile="0" resource="0" file="Source/DSP/FBCFilter.h"/>
+        <FILE id="nPUSUP" name="AllPassFilter.cpp" compile="1" resource="0"
+              file="Source/DSP/AllPassFilter.cpp"/>
+        <FILE id="qqotVO" name="AllPassFilter.h" compile="0" resource="0" file="Source/DSP/AllPassFilter.h"/>
         <FILE id="Z4pjOj" name="AudioEffect.cpp" compile="1" resource="0" file="Source/DSP/AudioEffect.cpp"/>
         <FILE id="Xdk4pL" name="AudioEffect.h" compile="0" resource="0" file="Source/DSP/AudioEffect.h"/>
-        <FILE id="Wa5586" name="GainEffect.cpp" compile="1" resource="0" file="Source/DSP/GainEffect.cpp"/>
-        <FILE id="IUG6kg" name="GainEffect.h" compile="0" resource="0" file="Source/DSP/GainEffect.h"/>
+        <FILE id="Ds3dSV" name="ReverbMain.cpp" compile="1" resource="0" file="Source/DSP/ReverbMain.cpp"/>
+        <FILE id="Mc06MI" name="ReverbMain.h" compile="0" resource="0" file="Source/DSP/ReverbMain.h"/>
+        <FILE id="Cj7tok" name="Biquad.cpp" compile="1" resource="0" file="Source/DSP/Biquad.cpp"/>
+        <FILE id="cqf7pP" name="Biquad.h" compile="0" resource="0" file="Source/DSP/Biquad.h"/>
+        <FILE id="XRwMVv" name="FractionalDelay.cpp" compile="1" resource="0"
+              file="Source/DSP/FractionalDelay.cpp"/>
+        <FILE id="pHFKG5" name="FractionalDelay.hpp" compile="0" resource="0"
+              file="Source/DSP/FractionalDelay.hpp"/>
       </GROUP>
     </GROUP>
   </MAINGROUP>

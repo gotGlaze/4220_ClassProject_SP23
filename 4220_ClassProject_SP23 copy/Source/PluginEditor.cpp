@@ -58,8 +58,8 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     hpfSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //hpf frequency
     hpfSlider.setBounds(70,300,87,100);
     hpfSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
-    hpfSlider.setRange(0, 1000); //0 to 500 previously
-    hpfSlider.setValue(200.f);
+    hpfSlider.setRange(0, 500);
+    hpfSlider.setValue(100.0);
     hpfSlider.setTextValueSuffix(" Hz");
     hpfSlider.setLookAndFeel(&smallKnobLNF);
     addAndMakeVisible(hpfSlider);
@@ -74,7 +74,6 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     wetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
     wetSlider.setBounds(245,230,145,180);
     wetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
-    wetSlider.setRange(0.f, 1.f);
     wetSlider.setLookAndFeel(&largeKnobLNF);
     addAndMakeVisible(wetSlider);
                     //feedback rn

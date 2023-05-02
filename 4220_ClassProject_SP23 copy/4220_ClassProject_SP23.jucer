@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="KikGvF" name="4220_ClassProject_SP23" projectType="audioplug"
+              useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
+              jucerFormatVersion="1" pluginFormats="buildAU,buildStandalone,buildVST3">
+  <MAINGROUP id="FGvqEP" name="4220_ClassProject_SP23">
+    <GROUP id="{B2FA9177-7B2A-7CD1-E0C5-29F61268637F}" name="Source">
+      <FILE id="N7FPWu" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="pea8kO" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="IQFDna" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="ACrYXP" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <GROUP id="{0D3EE0A2-963A-E8B2-E3B1-71648DE76333}" name="Binary Data">
+        <FILE id="E3fUZ5" name="background.png" compile="0" resource="1" file="Source/Binary Data/background.png"/>
+        <FILE id="X3PSeN" name="knob_large.png" compile="0" resource="1" file="Source/Binary Data/knob_large.png"/>
+        <FILE id="nN6oUd" name="knob_small.png" compile="0" resource="1" file="Source/Binary Data/knob_small.png"/>
+      </GROUP>
+      <GROUP id="{2A2F880F-C5C8-7AF0-C191-89BC1707871F}" name="Components">
+        <FILE id="sT6vvj" name="LargeKnob.cpp" compile="1" resource="0" file="Source/Components/LargeKnob.cpp"/>
+        <FILE id="k4n3b0" name="LargeKnob.h" compile="0" resource="0" file="Source/Components/LargeKnob.h"/>
+        <FILE id="E9tAoF" name="SmallKnob.cpp" compile="1" resource="0" file="Source/Components/SmallKnob.cpp"/>
+        <FILE id="h43gBA" name="SmallKnob.h" compile="0" resource="0" file="Source/Components/SmallKnob.h"/>
+      </GROUP>
+      <GROUP id="{6B280181-2DEC-1AA3-B711-508A10109150}" name="DSP">
+        <FILE id="JxwnLt" name="FBCFilter.cpp" compile="1" resource="0" file="Source/DSP/FBCFilter.cpp"/>
+        <FILE id="el5WEW" name="FBCFilter.h" compile="0" resource="0" file="Source/DSP/FBCFilter.h"/>
+        <FILE id="nPUSUP" name="AllPassFilter.cpp" compile="1" resource="0"
+              file="Source/DSP/AllPassFilter.cpp"/>
+        <FILE id="qqotVO" name="AllPassFilter.h" compile="0" resource="0" file="Source/DSP/AllPassFilter.h"/>
+        <FILE id="Z4pjOj" name="AudioEffect.cpp" compile="1" resource="0" file="Source/DSP/AudioEffect.cpp"/>
+        <FILE id="Xdk4pL" name="AudioEffect.h" compile="0" resource="0" file="Source/DSP/AudioEffect.h"/>
+        <FILE id="Ds3dSV" name="ReverbMain.cpp" compile="1" resource="0" file="Source/DSP/ReverbMain.cpp"/>
+        <FILE id="Mc06MI" name="ReverbMain.h" compile="0" resource="0" file="Source/DSP/ReverbMain.h"/>
+        <FILE id="Cj7tok" name="Biquad.cpp" compile="1" resource="0" file="Source/DSP/Biquad.cpp"/>
+        <FILE id="cqf7pP" name="Biquad.h" compile="0" resource="0" file="Source/DSP/Biquad.h"/>
+        <FILE id="XRwMVv" name="FractionalDelay.cpp" compile="1" resource="0"
+              file="Source/DSP/FractionalDelay.cpp"/>
+        <FILE id="pHFKG5" name="FractionalDelay.hpp" compile="0" resource="0"
+              file="Source/DSP/FractionalDelay.hpp"/>
+      </GROUP>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="4220_ClassProject_SP23"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="4220_ClassProject_SP23"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../Volumes/Macintosh HD - Data/Users/kyrahglaze/Applications/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>

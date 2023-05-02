@@ -64,13 +64,10 @@ public:
     void setDecayTime(float decayValue);
 
     float wet;//float wet = 0.5f;
-    //float smoothWet[2] = {0.f};
-    float smoothWet[2] = {0.f};
-    float alpha = 0.999f;
     void setWet(float wetValue);
     
     float hpf;
-    //float hpfSlope;
+    float hpfSlope;
     void setHPF(float hpfValue);
     
     float predelayMS = 0.0f;
@@ -98,15 +95,11 @@ private:
     float Fs = 48000.f;
     ReverbMain reverb;
     Biquad bqFilter {Biquad::FilterType::HPF, 0.7071f};
+    
     int count = 0;
     
-    juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> sWet {0.f};
-    juce::SmoothedValue<float, juce::ValueSmoothingTypes::Multiplicative> sHPF {200.f};
-    
-    public:
-    juce::AudioProcessorValueTreeState state;
-    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    
+    //public:
+    //value tree state information
     
     //=====================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessor)

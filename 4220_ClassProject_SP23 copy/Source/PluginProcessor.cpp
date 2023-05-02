@@ -18,25 +18,17 @@ _4220_ClassProject_SP23AudioProcessor::_4220_ClassProject_SP23AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), state(*this, nullptr, "ReverbParameteres", createParameterLayout())
+                       )
 #endif
 {
-}//shorten reverb, dry to wet 0 to 1
+}
 
 _4220_ClassProject_SP23AudioProcessor::~_4220_ClassProject_SP23AudioProcessor()
 {
+    
 }
 
 //value tree state set parameters
-juce::AudioProcessorValueTreeState::ParameterLayout _4220_ClassProject_SP23AudioProcessor::createParameterLayout() {
-    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
-    
-    params.push_back(std::make_unique<juce::AudioParameterFloat> ("wetValue","Dry to Wet Mix",
-                                                                  juce::NormalisableRange<float> (0.f, 1.f),
-                                                                  0.f) );
-    
-    return {params.begin(), params.end()};
-}
 
 
 //==============================================================================
@@ -104,16 +96,13 @@ void _4220_ClassProject_SP23AudioProcessor::changeProgramName (int index, const 
 //==============================================================================
 void _4220_ClassProject_SP23AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback initialisation that you need..
+    // Use this method as the place to do any pre-playback
+    // initialisation that you need..
     predelay.setFs(sampleRate); predelay.setDelaySamples(0.0f);
     reverb.prepareToPlay(sampleRate, samplesPerBlock);
     bqFilter.setFs(sampleRate);
     
-    float rate = 0.1;
-    alpha = std::exp(-log(9.f)/(sampleRate * rate));
-
-    sWet.reset(sampleRate, rate);
-    sHPF.reset(sampleRate, rate);
+    //float y = 0.1; //smoothing steps
 }
 
 void _4220_ClassProject_SP23AudioProcessor::releaseResources()
@@ -180,28 +169,18 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
     
-    for(int channel = 0; channel < totalNumInputChannels; ++channel) {
-        float v = sWet.getNextValue();
-        //float hpfFreq = sHPF.getNextValue();
-        if(count < 8) {
-            count++;
-        } else {
-            count = 0;
-            float hpfFreq = sHPF.skip(8);
-            bqFilter.setFreq(hpfFreq);
-        }
-        
-    for (int n = 0; n < numSamples; ++n)
+    for(int n = 0; n < numSamples; n++) {
+        //mix val
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         float x = buffer.getWritePointer(channel) [n];
+        //auto* channelData = buffer.getWritePointer (channel); //default
         float verb = predelay.processSample(x, channel);
         verb = reverb.processSample(verb, channel);
         verb = bqFilter.processSample(verb, channel);
-//        smoothWet[channel] = alpha * smoothWet[channel] + (1.f - alpha) * wet;
-//        float y = ((1.f- smoothWet[channel]) * x) + (smoothWet[channel] * verb);
-        //float y = ((1.f - 0.7) * x) + (0.7 * r);
         
-        float y = ((1.f-v) * x) + (v * verb);
+        float y = (1.f- wet) * x + wet * verb;
+        //float y = ((1.f - 0.7) * x) + (0.7 * r);
         buffer.getWritePointer(channel) [n] = y;
         
     }
@@ -244,8 +223,7 @@ void _4220_ClassProject_SP23AudioProcessor::setDecayTime(float decayValue) {
 
 void _4220_ClassProject_SP23AudioProcessor::setHPF(float hpfValue) {
     hpf = hpfValue;
-    //bqFilter.setFreq(hpf);
-    sHPF.setTargetValue(hpfValue);
+    bqFilter.setFreq(hpf);
 }
 
 //check this one out
@@ -255,8 +233,8 @@ void _4220_ClassProject_SP23AudioProcessor::setPreDelayTime(float pdValue) {
 }
 
 void _4220_ClassProject_SP23AudioProcessor::setWet(float wetValue) {
-    wet = wetValue/100.f;
-    sWet.setTargetValue(wetValue/100.f);
+    wet = wetValue;
+    //set wet value?? 
 }
 
 //==============================================================================

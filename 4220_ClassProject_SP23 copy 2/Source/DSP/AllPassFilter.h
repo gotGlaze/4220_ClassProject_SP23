@@ -1,0 +1,60 @@
+/*
+  ==============================================================================
+
+    AllPassFilter.h
+    Created: 19 Apr 2023 10:46:10pm
+    Author:  Kyrah Glaze
+
+  ==============================================================================
+*/
+
+#pragma once
+
+
+#include "FractionalDelay.hpp"
+
+class AllPassFilter{
+    
+public:
+    AllPassFilter(){};
+    
+    AllPassFilter(float speed, float depth, float delaySamples);
+    
+    float processSample(float x, const int c);
+    
+//    void setDiffusion(float diffusion);
+//    float getDiffusion();
+    
+    void setDelaySamples(float delaySamples);
+    float getDelaySamples();
+    
+    void prepareToPlay(float Fs);
+    float getFs();
+    
+    void setSpeed(float speed);
+    float getSpeed();
+    
+    void setDepth(float depth);
+    float getDepth();
+    
+    void setGain(float gain);
+    float getGain();
+    
+    void setFeedbackAPF(float feedbackAPF);
+    float getFeedbackAPF();
+    
+private:
+    
+    FractionalDelay fracDelay;
+    float Fs;
+    float delaySamples;
+    float diffusion;
+    float delay1;
+    float delay2[2] = {0.f};
+    
+    float speed;
+    float depth;
+    float gain;
+    float feedbackAPF;
+    
+};

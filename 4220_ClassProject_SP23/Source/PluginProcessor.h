@@ -64,13 +64,11 @@ public:
     void setDecayTime(float decayValue);
 
     float wet;//float wet = 0.5f;
-    //float smoothWet[2] = {0.f};
     float smoothWet[2] = {0.f};
     float alpha = 0.999f;
     void setWet(float wetValue);
     
     float hpf;
-    //float hpfSlope;
     void setHPF(float hpfValue);
     
     float predelayMS = 0.0f;
@@ -78,21 +76,20 @@ public:
     //void setPreDelayTime(float pdValue);
     void setPreDelayTime(float pdValue);
     
-
-    void setEffect(int effectNum) {
-        if(effectNum == 1) {
-            effect = std::unique_ptr<AudioEffect> ();
-        } else if (effectNum == 2) {
-            effect = std::unique_ptr<AudioEffect> ();
-        } else if (effectNum == 3) {
-            effect = std::unique_ptr<AudioEffect> ();
-        } else {
-            effect = std::unique_ptr<AudioEffect> ();
-        }
-    };
+//    void setEffect(int effectNum) {
+//        if(effectNum == 1) {
+//            effect = std::unique_ptr<AudioEffect> ();
+//        } else if (effectNum == 2) {
+//            effect = std::unique_ptr<AudioEffect> ();
+//        } else if (effectNum == 3) {
+//            effect = std::unique_ptr<AudioEffect> ();
+//        } else {
+//            effect = std::unique_ptr<AudioEffect> ();
+//        }
+//    };
     
 private:
-    std::unique_ptr<AudioEffect> effect;
+    //std::unique_ptr<AudioEffect> effect;
     
     FractionalDelay predelay; //???
     float Fs = 48000.f;
@@ -103,10 +100,9 @@ private:
     juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> sWet {0.f};
     juce::SmoothedValue<float, juce::ValueSmoothingTypes::Multiplicative> sHPF {200.f};
     
-    public:
+public:
     juce::AudioProcessorValueTreeState state;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    
     
     //=====================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessor)

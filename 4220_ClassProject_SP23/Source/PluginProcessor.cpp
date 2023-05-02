@@ -18,7 +18,7 @@ _4220_ClassProject_SP23AudioProcessor::_4220_ClassProject_SP23AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), state(*this, nullptr, "ReverbParameteres", createParameterLayout())
+                       ), state(*this, nullptr, "ReverbParameters", createParameterLayout())
 #endif
 {
 }//shorten reverb, dry to wet 0 to 1
@@ -29,13 +29,23 @@ _4220_ClassProject_SP23AudioProcessor::~_4220_ClassProject_SP23AudioProcessor()
 
 //value tree state set parameters
 juce::AudioProcessorValueTreeState::ParameterLayout _4220_ClassProject_SP23AudioProcessor::createParameterLayout() {
+    
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat> ("wetValue","Dry to Wet Mix",
+    params.push_back(std::make_unique<juce::AudioParameterFloat> ("wetValue","Mix",
                                                                   juce::NormalisableRange<float> (0.f, 1.f),
-                                                                  0.f) );
-    
+                                                                  0.4f) );
+    params.push_back(std::make_unique<juce::AudioParameterFloat> ("decayTime","Time",
+                                                                  juce::NormalisableRange<float> (0.f, 5000.f),
+                                                                  100.f) ); //default
+    params.push_back(std::make_unique<juce::AudioParameterFloat> ("preDelayTime","Predelay",
+                                                                  juce::NormalisableRange<float> (0.f, 200.f),
+                                                                  20.f) );
+    params.push_back(std::make_unique<juce::AudioParameterFloat> ("hpf","Frequency",
+                                                                  juce::NormalisableRange<float> (0.f, 1000.f),
+                                                                  500.f) );
     return {params.begin(), params.end()};
+    
 }
 
 
@@ -160,11 +170,13 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     // This is here to avoid people getting screaming feedback
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
+    
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    predelay.setDepth(0.0f);
-    predelay.setSpeed(0.0f);
+    predelay.setDepth(2.0f);
+    predelay.setSpeed(2.0f);
+    
     float predelaySec = predelayMS * 0.001;
     float predelaySamples = predelaySec * Fs;
     predelay.setDelaySamples(predelaySamples);
@@ -172,6 +184,17 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     int numSamples = buffer.getNumSamples();
     
     // GUI values state raw parameter values
+    float wetValue = *state.getRawParameterValue("wetValue");
+    sWet.setTargetValue(wetValue/100.f); //same for all parameters
+    
+    float hpfValue = *state.getRawParameterValue("hpf");
+    sHPF.setTargetValue(hpfValue);
+    
+    float decayTime = *state.getRawParameterValue("decayTime");
+    setDecayTime(decayTime);
+    
+    float preDelayTime = *state.getRawParameterValue("preDelayTime");
+    setPreDelayTime(preDelayTime);
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
@@ -180,7 +203,7 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
     
-    for(int channel = 0; channel < totalNumInputChannels; ++channel) {
+    for(int n = 0; n < numSamples; ++n) {
         float v = sWet.getNextValue();
         //float hpfFreq = sHPF.getNextValue();
         if(count < 8) {
@@ -191,7 +214,7 @@ void _4220_ClassProject_SP23AudioProcessor::processBlock (juce::AudioBuffer<floa
             bqFilter.setFreq(hpfFreq);
         }
         
-    for (int n = 0; n < numSamples; ++n)
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         float x = buffer.getWritePointer(channel) [n];
         float verb = predelay.processSample(x, channel);
@@ -228,14 +251,21 @@ void _4220_ClassProject_SP23AudioProcessor::getStateInformation (juce::MemoryBlo
     // as intermediaries to make it easy to save and load complex data.
     
     //current state info
+    auto currentState = state.copyState();
+    std::unique_ptr<juce::XmlElement> xml( currentState.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void _4220_ClassProject_SP23AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
-    
+
     //xml state
+    std::unique_ptr<juce::XmlElement> xml (getXmlFromBinary(data, sizeInBytes));
+    if(xml && xml->hasTagName(state.state.getType())) {
+        state.replaceState(juce::ValueTree::fromXml(*xml));
+    }
 }
 
 void _4220_ClassProject_SP23AudioProcessor::setDecayTime(float decayValue) {

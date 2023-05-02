@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class _4220_ClassProject_SP23AudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::Slider::Listener
+class _4220_ClassProject_SP23AudioProcessorEditor  : public juce::AudioProcessorEditor//, public juce::Slider::Listener
 
 {
 public:
@@ -27,8 +27,7 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    void sliderValueChanged(juce::Slider *slider) override;
-    //virtual void buttonClicked(juce::Button* button);
+    //void sliderValueChanged(juce::Slider *slider) override;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -53,6 +52,9 @@ private:
     
     juce::LookAndFeel_V2 lookAndFeel2;
     
-//value tree 
+public:
+    
+    std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>> sliderAttachment;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_4220_ClassProject_SP23AudioProcessorEditor)
 };

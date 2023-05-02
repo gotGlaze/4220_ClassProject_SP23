@@ -20,7 +20,7 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     bgImage = juce::ImageCache::getFromMemory(BinaryData::background_png, BinaryData::background_pngSize);
     
     //Reverb Time
-    reverbTimeSlider.addListener(this);
+    //reverbTimeSlider.addListener(this);
     reverbTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     reverbTimeSlider.setBounds(40,80,145,180);
     reverbTimeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
@@ -37,7 +37,7 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     
     
     //Predelay
-    preDelaySlider.addListener(this);
+    //preDelaySlider.addListener(this);
     preDelaySlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //predelay
     preDelaySlider.setBounds(280,100,87,100);
     preDelaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
@@ -54,7 +54,7 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     
     
     //High pass filter
-    hpfSlider.addListener(this);
+    //hpfSlider.addListener(this);
     hpfSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //hpf frequency
     hpfSlider.setBounds(70,300,87,100);
     hpfSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
@@ -70,7 +70,7 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
     hpfLabel.setFont(juce::Font("Times New Roman", 20.0, juce::Font::bold));
     
     //Wet dry mix
-    wetSlider.addListener(this);
+    //wetSlider.addListener(this);
     wetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag); //reverb time
     wetSlider.setBounds(245,230,145,180);
     wetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
@@ -99,8 +99,15 @@ _4220_ClassProject_SP23AudioProcessorEditor::_4220_ClassProject_SP23AudioProcess
 //    setSize(800,300);
 //    setResizeLimits(412, 140, 1600, 550);
     
-    //value tree state
-    
+    sliderAttachment.emplace_back(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.state,
+                                                                                           "wetValue", wetSlider));
+    sliderAttachment.emplace_back(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.state,
+                                                                                           "decayTime", wetSlider));
+    sliderAttachment.emplace_back(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.state,
+                                                                                           "preDelayTime", wetSlider));
+    sliderAttachment.emplace_back(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.state,
+                                                                                           "hpf", wetSlider));
+
 }
 
 _4220_ClassProject_SP23AudioProcessorEditor::~_4220_ClassProject_SP23AudioProcessorEditor()
@@ -122,23 +129,23 @@ void _4220_ClassProject_SP23AudioProcessorEditor::resized()
 }
 
 
-void _4220_ClassProject_SP23AudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
-   
-    if(slider == &preDelaySlider) {
-        audioProcessor.setPreDelayTime(preDelaySlider.getValue());
-    }
-    
-    if(slider == &reverbTimeSlider) {
-        audioProcessor.setDecayTime(reverbTimeSlider.getValue());
-    }
-    
-    if(slider == &hpfSlider) {
-        audioProcessor.setHPF(hpfSlider.getValue());
-        //hpf
-    }
-    
-    if(slider == &wetSlider) {
-        audioProcessor.setWet(wetSlider.getValue());
-    }
-    
-}
+//void _4220_ClassProject_SP23AudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
+//
+//    if(slider == &preDelaySlider) {
+//        audioProcessor.setPreDelayTime(preDelaySlider.getValue());
+//    }
+//
+//    if(slider == &reverbTimeSlider) {
+//        audioProcessor.setDecayTime(reverbTimeSlider.getValue());
+//    }
+//
+//    if(slider == &hpfSlider) {
+//        audioProcessor.setHPF(hpfSlider.getValue());
+//        //hpf
+//    }
+//
+//    if(slider == &wetSlider) {
+//        audioProcessor.setWet(wetSlider.getValue());
+//    }
+//
+//}
